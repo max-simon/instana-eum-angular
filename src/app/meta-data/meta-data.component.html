@@ -1,0 +1,19 @@
+<div *ngFor="let meta of metadata; let i = index" class="row mb-2">
+    <div class="col-5">
+        <div class="form-floating">
+            <input type="text" placeholder="key" [(ngModel)]="meta.key" (change)="emit()" id="meta-key-{{i}}" class="form-control"/>
+            <label for="meta-key-{{i}}">Key</label>
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="form-floating">
+            <input type="text" placeholder="Value" [(ngModel)]="meta.value" id="meta-value-{{i}}" (change)="emit()" class="form-control"/>
+            <label for="meta-value-{{i}}">Value</label>
+        </div>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-sm btn-inline btn-outline-danger" (click)="removeMeta(meta.key)">x</button>
+    </div>
+</div>
+
+<button class="btn btn-outline-primary mt-2" (click)="metadata.push({key: '', value: ''})">+</button>

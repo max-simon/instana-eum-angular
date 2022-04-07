@@ -1,0 +1,144 @@
+<div class="container">
+    <h1>Instana EUM Action Center</h1>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">Page load</h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><span [ngClass]="instana.pageLoggingActive ? 'color-active' : 'color-inactive'">&#x25C9;</span>&nbsp;<span>Page Load is {{instana.pageLoggingActive ? 'active' : 'inactive'}}</span></h6>
+                  <p class="card-text">
+                    Current path: {{instana.currentPageLoad.path}}<br/>
+                    Current page load id: {{instana.currentPageLoad.id}}
+                  </p>
+                
+                  <h6>Navigate page</h6>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-outline-primary" (click)="changePage('product')">/product/:productId</a>
+                    <a class="btn btn-outline-primary" (click)="changePage('shop')">/shop/:shopId</a>
+                    <a class="btn btn-outline-primary" routerLink="/home">/home</a>
+                  </div>
+
+                  <h6>Add query parameters</h6>
+                  
+                </div>
+            </div>
+
+
+        </div> 
+
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">Errors</h5>
+                  <p class="card-text">
+                    Click the button below to throw a new JavaScript error.
+                  </p>
+
+                  <div class="form-floating">
+                    <input #errorMessageInput type="text" id="error-message" placeholder="Error message" class="form-control"/>
+                    <label for="error-message">Error message</label>
+                  </div>
+                  
+                  <button class="btn btn-outline-danger mt-2" (click)="throwError(errorMessageInput.value)">Throw</button>
+                  
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">Metadata</h5>
+                  <app-meta-data (data)="globMetaData"></app-meta-data>
+                  <button class="btn btn-primary mt-2" (click)="setMetadata()">Save</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">Event</h5>
+                  
+                  <div class="">
+                    <div class="form-floating">
+                      <input type="text" placeholder="Event name" id="event-name" class="form-control" [(ngModel)]="currentEventName"/>
+                      <label for="event-name">Event name</label>
+                    </div>
+
+                    <div class="form-floating">
+                      <input type="text" placeholder="Duration" id="event-duration" class="form-control" [(ngModel)]="currentEvent.duration"/>
+                      <label for="event-name">Duration</label>
+                    </div>
+
+                    <div class="form-row align-items-center">
+                      <div class="col-auto">
+                        <div class="form-check mb-2">
+                          <input class="form-check-input" type="checkbox" id="event-include-error" [(ngModel)]="currentEventError">
+                          <label class="form-check-label" for="event-include-error">
+                            Include error
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <label class="sr-only" for="event-error-message">Error message</label>
+                        <input type="text" class="form-control mb-2" id="event-error-message" placeholder="Error message" [disabled]="!currentEventError" [(ngModel)]="currentEventErrorMessage">
+                      </div>
+                    </div>
+
+                    <div class="">
+                      <h6>Metadata</h6>
+                      <app-meta-data (data)="currentEvent.meta"></app-meta-data>
+                    </div>
+
+                    <button class="btn btn-primary mt-2" [disabled]="!currentEventName" (click)="sendEvent()">Send</button>
+                    
+                  </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title">User Tracking</h5>
+
+                <h6>Session tracking</h6>
+
+                <span [ngClass]="instana.sessionTrackingActive ? 'color-active' : 'color-inactive'">&#x25C9;</span>&nbsp;<span>Session Tracking is {{instana.sessionTrackingActive ? 'active' : 'inactive'}}</span><br/>
+                
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a class="btn btn-outline-primary" (click)="instana.trackSession()">Start</a>
+                  <a class="btn btn-outline-primary" (click)="instana.terminateSession()">Stop</a>
+                </div>
+
+                <h6>User tracking</h6>
+                <span [ngClass]="instana.userLoggingActive ? 'color-active' : 'color-inactive'">&#x25C9;</span>&nbsp;<span>User Tracking is {{instana.userLoggingActive ? 'active' : 'inactive'}}</span><br/>
+
+                <div class="form-floating">
+                  <input type="text" id="user-id" placeholder="User ID" class="form-control" [(ngModel)]="currentUser.id"/>
+                  <label for="user-id">User ID</label>
+                </div>
+
+                <div class="form-floating">
+                  <input type="text" id="user-name" placeholder="User Name" class="form-control" [(ngModel)]="currentUser.name"/>
+                  <label for="user-name">User Name</label>
+                </div>
+
+                <div class="form-floating">
+                  <input type="text" id="user-email" placeholder="User Email" class="form-control" [(ngModel)]="currentUser.email"/>
+                  <label for="user-email">User Email</label>
+                </div>
+
+                <button class="btn btn-primary mt-2" (click)="setUser()">Set</button>
+
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
